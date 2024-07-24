@@ -59,6 +59,13 @@ class CategoryController extends Controller
         return view('categories.subcategories', compact('category'));
     }
 
+    public function showItems(Category $category)
+    {
+        $category->load('items'); // Charge les subplaces associées
+
+        return view('categories.items', compact('category'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Gestion des sous-catégories') }}
+            {{ __('Gestion des modèles') }}
         </h2>
     </x-slot>
 
@@ -16,7 +16,7 @@
                                 <div class="flex w-full items-center justify-between space-x-6 p-6">
                                     <div class="flex-1 truncate">
                                         <div class="flex items-center space-x-3">
-                                            <h3 class="truncate text-sm font-medium text-gray-900"> {{$subcategory->name}} </h3>
+                                            <h3 class="truncate text-sm font-medium text-gray-900"> {{$subcategory->name}}</h3>
                                         </div>
                                         <div>
                                             <p class="mt-1 truncate text-sm text-gray-500"> {{ $subcategory->category->name ?? 'N/A' }} </p>
@@ -35,8 +35,7 @@
                         
                     </ul>
                     <div class="mt-4">
-                            <a href="{{ route('subcategories.create') }}"><x-primary-button>{{ __('Ajouter une sous-catégorie') }}</x-primary-button></a>
-                            
+                        <a href="{{ route('subcategories.create') }}"><x-primary-button>{{ __('Ajouter une sous-catégorie') }}</x-primary-button></a>
                     </div>
                 </div>
             </div>
