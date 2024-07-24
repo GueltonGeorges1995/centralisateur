@@ -57,7 +57,12 @@ class SubplaceController extends Controller
         $places = Place::all();
         return view('subplaces.show', compact('subplace','places'));
     }
-    
+    public function showItems(Subplace $subplace)
+    {
+        $subplace->load('items');
+
+        return view('subplaces.items', compact('subplace'));
+    }
 
     /**
      * Show the form for editing the specified resource.

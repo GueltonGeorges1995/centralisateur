@@ -22,8 +22,8 @@
                                             <p class="mt-1 truncate text-sm text-gray-500"> {{ $subplace->place->name ?? 'N/A' }} </p>
                                         </div>
                                         <div class="flex">
-                                            <p class="mt-1 truncate text-sm text-gray-500"> Nombre de d'item :
-                                                <span> {{$subplace->id}} </span>
+                                            <p class="mt-1 truncate text-sm text-gray-500"> Nombre d'équipements :
+                                                <span>{{$subplace->items->count()}}</span>
                                             </p>
                                         </div>
 
@@ -35,8 +35,7 @@
                         
                     </ul>
                     <div class="mt-4">
-                            <a href="{{ route('subplaces.create') }}"><x-primary-button>{{ __('Ajouter un Local') }}</x-primary-button></a>
-                            
+                        <a href="{{ route('subplaces.create') }}"><x-primary-button>{{ __('Ajouter un Local') }}</x-primary-button></a>
                     </div>
                 </div>
             </div>

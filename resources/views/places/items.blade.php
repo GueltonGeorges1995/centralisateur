@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Gestion des Équipements') }}
+            {{ __('Sous-emplacements de ') . $place->name }}
         </h2>
     </x-slot>
 
@@ -9,11 +9,16 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+                    @if ($place->items->isEmpty())
+                    <p class="mt-1 text-sm text-gray-600">Aucun équipement trouvé.</p>
+                    @else
                     <div class="">
                         <div class="sm:flex sm:items-center">
                             <div class="sm:flex-auto">
-                                <h1 class="text-base font-semibold leading-6 text-gray-900">Listes des Équipements</h1>
-                                <p class="mt-2 text-sm text-gray-700">Une liste des tous les équipements IT</p>
+                                <h1 class="text-base font-semibold leading-6 text-gray-900">Listes des Équipements de
+                                    {{$place->name}} </h1>
+                                <p class="mt-2 text-sm text-gray-700">Une liste des tous les équipements IT se situant à
+                                    l'emplacement {{$place->name}}</p>
                             </div>
                             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                                 <div>
@@ -102,20 +107,25 @@
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-gray-200 bg-white">
-                                            @foreach ($items as $item)
+                                            @foreach ($place->items as $item)
                                                 <tr>
                                                     <td
                                                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                                                        {{$item->name}} </td>
+                                                        {{$item->name}}
+                                                    </td>
                                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                        {{$item->subplace->name}} </td>
+                                                        {{$item->subplace->name}}
+                                                    </td>
                                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                        {{$item->subcategory->name}} </td>
+                                                        {{$item->subcategory->name}}
+                                                    </td>
                                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                        {{$item->agent->name}} </td>
+                                                        {{$item->agent->name}}
+                                                    </td>
                                                     <td
                                                         class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
-                                                        <a href=" {{ route('items.show', $item->id) }} " class="text-indigo-600 hover:text-indigo-900">Voir
+                                                        <a href=" {{ route('items.show', $item->id) }} "
+                                                            class="text-indigo-600 hover:text-indigo-900">Voir
                                                             plus<span class="sr-only"> Voir plus</span></a>
                                                     </td>
                                                 </tr>
@@ -125,16 +135,17 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="mt-4">
-                            <a
-                                href="{{ route('items.create') }}"><x-primary-button>{{ __('Ajouter un équipement') }}</x-primary-button></a>
-
+                        <div class="mt-6 flex justify-start">
+                            <a href="{{ route('places.show', $place->id) }}"
+                                class="text-sm font-semibold text-gray-900">
+                                <x-primary-button>{{ __("Revenir en arrière" ) }}</x-primary-button>
+                            </a>
                         </div>
                     </div>
-
-
+                    @endif
                     
+
+
                 </div>
             </div>
         </div>

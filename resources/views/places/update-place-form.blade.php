@@ -15,13 +15,12 @@
 
         <div>
             <label for="">Nom de l'emplacement</label>
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" value=" {{$place->name}} " required autofocus autocomplete="name" />
+            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" value=" {{$place->name}} " required  autocomplete="name" />
           
         </div>
         <div>
             <label for="">Adresses de l'emplacement</label>
-            <x-text-input id="address" name="address" type="text" class="mt-1 block w-full" value=" {{$place->address}} " required autofocus autocomplete="address" />
-          
+            <x-text-input id="address" name="address" type="text" class="mt-1 block w-full" value=" {{$place->address}} " required  autocomplete="address" />
         </div>
 
         

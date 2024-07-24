@@ -3,20 +3,17 @@
         <h2 class="text-lg font-medium text-gray-900">
             {{ __("Modification du local") }}
         </h2>
-
         <p class="mt-1 text-sm text-gray-600">
             {{ __("Vous pouvez changer le nom et l'emplacement du local.") }}
         </p>
     </header>
-
     <form method="post" action="{{ route('subplaces.update', $subplace) }}" class="mt-6 space-y-6">
         @csrf
         @method('patch')
-
         <div>
             <label for="">Nom du local</label>
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" value=" {{$subplace->name}} "
-                required autofocus autocomplete="name" />
+                required  autocomplete="name" />
 
         </div>
         <div class="mt-2">

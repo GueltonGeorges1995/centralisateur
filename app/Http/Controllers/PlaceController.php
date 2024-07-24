@@ -16,7 +16,6 @@ class PlaceController extends Controller
     {
         $places = Place::with('subplaces')->get();
        
-
          return view('places.index', compact('places'));
     }
 
@@ -53,8 +52,6 @@ class PlaceController extends Controller
      */
     public function show(Place $place)
     {
-        // return view('places.show');
-        // $place = Place::with('subplaces')->findOrFail($place->id);
         $place->load('subplaces');
 
         return view('places.show', compact('place'));
@@ -62,9 +59,16 @@ class PlaceController extends Controller
 
     public function showSubplaces(Place $place)
     {
-        $place->load('subplaces'); // Charge les subplaces associées
+        $place->load('subplaces'); 
 
         return view('places.subplaces', compact('place'));
+    }
+
+    public function showItems(Place $place)
+    {
+        $place->load('items');
+
+        return view('places.items', compact('place'));
     }
 
     /**

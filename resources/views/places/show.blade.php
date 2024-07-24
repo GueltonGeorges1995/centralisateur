@@ -18,24 +18,40 @@
                             <dl class="divide-y divide-gray-100">
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt class="text-sm font-medium leading-6 text-gray-900">Nom de l'emplacement</dt>
-                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {{$place->name}}
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                        {{$place->name}}
                                     </dd>
                                 </div>
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt class="text-sm font-medium leading-6 text-gray-900">Adresses de l'emplacement
                                     </dt>
-                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {{$place->address}} </dd>
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                        {{$place->address}} </dd>
                                 </div>
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt class="text-sm font-medium leading-6 text-gray-900">Nombre de locaux</dt>
-                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {{$place->subplaces->count()}} </dd>
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 underline">
+                                       <a href="{{ route('places.subplaces', $place->id) }}">{{$place->subplaces->count()}} local(aux) </a> </dd>
+                                </div>
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nombre d'équipement</dt>
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 underline">
+                                       <a href="{{ route('places.items', $place->id) }}">{{$place->items->count()}} équipement(s)</a></dd>
                                 </div>
                             </dl>
                         </div>
 
-                        <div class="mt-4">
-                        <a href="{{ route('places.subplaces', $place->id) }}"><x-primary-button>{{ __('Voir les locaux') }}</x-primary-button></a>
+                        <!-- <div class="mt-4">
+                            <a
+                                href="{{ route('places.subplaces', $place->id) }}"><x-primary-button>{{ __('Voir les locaux') }}</x-primary-button></a>
                         </div>
+                        <span class="isolate inline-flex rounded-md shadow-sm">
+                            <button type="button"
+                                class="relative inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10">Voir les locaux</button>
+                          
+                            <button type="button"
+                                class="relative -ml-px inline-flex items-center rounded-r-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10">Days</button>
+                        </span> -->
                     </div>
                 </div>
             </div>
@@ -54,5 +70,5 @@
         </div>
     </div>
 
-    
+
 </x-app-layout>

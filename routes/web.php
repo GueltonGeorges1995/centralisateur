@@ -28,11 +28,13 @@ Route::middleware('auth')->group(function () {
 Route::resource('places', PlaceController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
     ->middleware(['auth', 'verified']);
-Route::get('/places/{place}/subplaces', [PlaceController::class, 'showSubplaces'])->name('places.subplaces');
+Route::get('/places/{place}/subplaces', [PlaceController::class, 'showSubplaces'])->name('places.subplaces')->middleware(['auth', 'verified']);
+Route::get('/places/{place}/items', [PlaceController::class, 'showItems'])->name('places.items')->middleware(['auth', 'verified']);
 
 Route::resource('subplaces', SubplaceController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
     ->middleware(['auth', 'verified']);  
+Route::get('/subplaces/{subplace}/items', [SubplaceController::class, 'showItems'])->name('subplaces.items')->middleware(['auth', 'verified']);
 
 Route::resource('categories', CategoryController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])

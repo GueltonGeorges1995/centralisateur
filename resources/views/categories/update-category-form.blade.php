@@ -15,7 +15,7 @@
 
         <div>
             <label for="">Nom de la catégorie</label>
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" value=" {{$category->name}} " required autofocus autocomplete="name" />
+            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" value=" {{$category->name}} " required autocomplete="name" />
           
         </div>
         <div class="flex items-center gap-4">

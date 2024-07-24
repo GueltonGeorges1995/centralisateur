@@ -24,18 +24,13 @@
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt class="text-sm font-medium leading-6 text-gray-900">Adresses de l'emplacement
                                     </dt>
-                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {{$subplace->place->name}} </dd>
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 underline"><a href="{{ route('places.show', $subplace->place->id) }}">{{$subplace->place->name}}</a></dd>
                                 </div>
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nombre de locaux</dt>
-                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                        10</dd>
+                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nombre d'équipements</dt>
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 underline"> <a href="{{ route('subplaces.items', $subplace->id) }}"> {{$subplace->items->count()}} </a> </dd>
                                 </div>
                             </dl>
-                        </div>
-
-                        <div class="mt-4">
-                        <x-primary-button>{{ __('Voir les locaux') }}</x-primary-button>
                         </div>
                     </div>
                 </div>
