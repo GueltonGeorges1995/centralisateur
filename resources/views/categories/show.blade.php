@@ -26,7 +26,7 @@
                                     <dt class="text-sm font-medium leading-6 text-gray-900">Nombre de modèles associés
                                     </dt>
                                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                        {{$category->subcategories->count()}} </dd> test
+                                        {{$category->subcategories->count()}} </dd> test test2 
                                 </div>
                             </dl>
                         </div>
