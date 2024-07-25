@@ -14,10 +14,19 @@
         @method('patch')
 
         <div>
-            <label for="">Nom du local</label>
+            <label for="name">Nom d'utilisateur</label>
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" value=" {{$agent->name}} "
-                required autofocus autocomplete="name" />
-
+                required autocomplete="name" />
+        </div>
+        <div>
+            <label for="ext">Numéro d'Extension</label>
+            <x-text-input id="ext" name="ext" type="text" class="mt-1 block w-full" value=" {{$agent->ext}} "
+                required autocomplete="ext" />
+        </div>
+        <div>
+            <label for="mail">Adresse Mail</label>
+            <x-text-input id="mail" name="mail" type="text" class="mt-1 block w-full" value=" {{$agent->mail}} "
+                required autocomplete="mail" />
         </div>
         <div class="mt-2">
         <label for="">Département</label>

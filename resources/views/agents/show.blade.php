@@ -23,18 +23,21 @@
                                 </div>
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt class="text-sm font-medium leading-6 text-gray-900">Nom du département
-                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {{$agent->department->name}} </dd>
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 underline"><a href="{{ route('departments.show', $agent->department->id) }}">{{$agent->department->name}}</a></dd>
                                 </div>
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nombre d'objets</dt>
-                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                        10</dd>
+                                    <dt class="text-sm font-medium leading-6 text-gray-900">Numéro d'Extension </dt>
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {{$agent->ext}} </dd>
+                                </div>
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt class="text-sm font-medium leading-6 text-gray-900">Adresse mail</dt>
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {{$agent->mail}} </dd>
+                                </div>
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nombre d'équipements associés</dt>
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 underline"> <a href="{{ route('agents.items', $agent->id) }}"> {{$agent->items->count()}} équipement(s)</a></dd>
                                 </div>
                             </dl>
-                        </div>
-
-                        <div class="mt-4">
-                        <x-primary-button>{{ __("Voir les objets de l'agent") }}</x-primary-button>
                         </div>
                     </div>
                 </div>

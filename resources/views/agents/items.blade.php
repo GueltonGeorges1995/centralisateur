@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Gestion des agents') }}
+            {{ __("Équipements de l'agent ") . $agent->name }}
         </h2>
     </x-slot>
 
@@ -9,11 +9,15 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+                    @if ($agent->items->isEmpty())
+                    <p class="mt-1 text-sm text-gray-600">Aucun équipement trouvé.</p>
+                    @else
                     <div class="">
                         <div class="sm:flex sm:items-center">
                             <div class="sm:flex-auto">
-                                <h1 class="text-base font-semibold leading-6 text-gray-900">Listes des Agents</h1>
-                                <p class="mt-2 text-sm text-gray-700">Une liste des tous les agents</p>
+                                <h1 class="text-base font-semibold leading-6 text-gray-900">Équipements de
+                                    {{$agent->name}} </h1>
+                                <p class="mt-2 text-sm text-gray-700">Une liste des tous les équipements associé à l'agent :  {{$agent->name}}</p>
                             </div>
                             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                                 <div>
@@ -52,7 +56,7 @@
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     <a href="#" class="group inline-flex">
-                                                        Ext
+                                                        Local
                                                         <span
                                                             class="ml-2 flex-none rounded bg-gray-100 text-gray-900 group-hover:bg-gray-200">
                                                             <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"
@@ -67,7 +71,7 @@
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     <a href="#" class="group inline-flex">
-                                                        Adresse Mail
+                                                        Sous-Catégorie
                                                         <span
                                                             class="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
                                                             <svg class="invisible ml-2 h-5 w-5 flex-none rounded text-gray-400 group-hover:visible group-focus:visible"
@@ -83,7 +87,7 @@
                                                 <th scope="col"
                                                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                                     <a href="#" class="group inline-flex">
-                                                        Équipements
+                                                        Agent
                                                         <span
                                                             class="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
                                                             <svg class="invisible ml-2 h-5 w-5 flex-none rounded text-gray-400 group-hover:visible group-focus:visible"
@@ -102,20 +106,25 @@
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-gray-200 bg-white">
-                                            @foreach ($agents as $agent)
+                                            @foreach ($agent->items as $item)
                                                 <tr>
                                                     <td
                                                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                                                        {{$agent->name}} </td>
+                                                        {{$item->name}}
+                                                    </td>
                                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                        {{$agent->ext}} </td>
+                                                        {{$item->subplace->name}}
+                                                    </td>
                                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                        {{$agent->mail}} </td>
+                                                        {{$item->subcategory->name}}
+                                                    </td>
                                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                        {{$agent->items->count()}}                 </td>
+                                                        {{$item->agent->name}}
+                                                    </td>
                                                     <td
                                                         class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
-                                                        <a href=" {{ route('agents.show', $agent->id) }} " class="text-indigo-600 hover:text-indigo-900">Voir
+                                                        <a href=" {{ route('items.show', $item->id) }} "
+                                                            class="text-indigo-600 hover:text-indigo-900">Voir
                                                             plus<span class="sr-only"> Voir plus</span></a>
                                                     </td>
                                                 </tr>
@@ -125,16 +134,17 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="mt-4">
-                            <a
-                                href="{{ route('agents.create') }}"><x-primary-button>{{ __('Ajouter un agent') }}</x-primary-button></a>
-
+                        <div class="mt-6 flex justify-start">
+                            <a href="{{ route('agents.show', $agent->id) }}"
+                                class="text-sm font-semibold text-gray-900">
+                                <x-primary-button>{{ __("Revenir en arrière" ) }}</x-primary-button>
+                            </a>
                         </div>
                     </div>
-
-
+                    @endif
                     
+
+
                 </div>
             </div>
         </div>

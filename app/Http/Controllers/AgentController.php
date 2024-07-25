@@ -34,11 +34,15 @@ class AgentController extends Controller
     {
         $validatedData =  $request->validate([
             'name' => 'required|string|max:255',
+            'mail' => 'required|string|max:255',
+            'ext' => 'required|string|max:255',
             'department_id' => 'required|exists:departments,id',
         ]);
         
         Agent::create([
             'name' => $validatedData['name'],
+            'mail' => $validatedData['mail'],
+            'ext' => $validatedData['ext'],
             'department_id' => $validatedData['department_id'],
             
         ]);
@@ -56,6 +60,12 @@ class AgentController extends Controller
         return view('agents.show', compact('agent','departments'));
     }
 
+    public function showItems(Agent $agent)
+    {
+        $agent->load('items');
+
+        return view('agents.items', compact('agent'));
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -71,8 +81,9 @@ class AgentController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'ext' => 'required|string|max:255',
+            'mail' => 'required|string|max:255',
             'department_id' => 'required|exists:departments,id',
-            
         ]);
 
         $agent->update($validatedData);
