@@ -50,7 +50,8 @@ Route::get('/subcategories/{subcategory}/items', [SubcategoryController::class, 
 Route::resource('departments', DepartmentController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
     ->middleware(['auth', 'verified']);
-Route::get('/departments/{department}/agents', [DepartmentController::class, 'showAgents'])->name('departments.agents');
+Route::get('/departments/{department}/agents', [DepartmentController::class, 'showAgents'])->name('departments.agents')->middleware(['auth', 'verified']);
+Route::get('/departments/{department}/items', [DepartmentController::class, 'showItems'])->name('departments.items')->middleware(['auth', 'verified']);
 
 Route::resource('agents', AgentController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])

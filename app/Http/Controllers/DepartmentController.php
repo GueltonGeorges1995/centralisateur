@@ -58,6 +58,13 @@ class DepartmentController extends Controller
         return view('departments.agents', compact('department'));
     }
 
+    public function showItems(Department $department)
+    {
+        $department->load('items'); // Charge les subplaces associées
+
+        return view('departments.items', compact('department'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

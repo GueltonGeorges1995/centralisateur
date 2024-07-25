@@ -1,11 +1,11 @@
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __("Modification de la sous-catégorie") }}
+            {{ __("Modification du modèle") }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            {{ __("Vous pouvez changer le nom et l'emplacement de la sous-catégorie.") }}
+            {{ __("Vous pouvez changer le nom et la catégorie du modèle") }}
         </p>
     </header>
 
@@ -14,13 +14,13 @@
         @method('patch')
 
         <div>
-            <label for="">Nom du local</label>
+            <label for="">Nom du modèle</label>
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" value=" {{$subcategory->name}} "
-                required autofocus autocomplete="name" />
+                required autocomplete="name" />
 
         </div>
         <div class="mt-2">
-        <label for="">Emplacement</label>
+        <label for="">Categorie</label>
             <select id="catgory_id" name="category_id" autocomplete="category-name"
                 class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
                 @foreach ($categories as $category)

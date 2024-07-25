@@ -18,8 +18,9 @@
                                         <div class="flex items-center space-x-3">
                                             <h3 class="truncate text-sm font-medium text-gray-900"> {{$department->name}} </h3>
                                         </div>
-                                        <div class="flex">
+                                        <div class="">
                                             <p class="mt-1 truncate text-sm text-gray-500"> Nombre d'agent :<span> {{ $department->agents->count() }} </span></p>
+                                            <p class="mt-1 truncate text-sm text-gray-500"> Nombre d'Équipements :<span> {{ $department->items->count() }} </span></p>
                                         </div>
                                     </div>
                                 </div>

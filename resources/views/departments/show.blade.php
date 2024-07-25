@@ -17,22 +17,24 @@
                         <div class="mt-6 border-t border-gray-100">
                             <dl class="divide-y divide-gray-100">
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nom du département</dt>
+                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nom du département :</dt>
                                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                                         {{$department->name}}
                                     </dd>
                                 </div>
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nombre d'agents associés
+                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nombre d'agents associés :
                                     </dt>
-                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                        {{$department->agents->count()}} </dd>
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 underline">
+                                     <a href="{{ route('departments.agents', $department->id) }}">{{$department->agents->count()}} agent(s)</a></dd>
+                                </div>
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nombre d'équipements associés :
+                                    </dt>
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 underline">
+                                     <a href="{{ route('departments.items', $department->id) }}">{{$department->items->count()}} équipement(s)</a></dd>
                                 </div>
                             </dl>
-                        </div>
-
-                        <div class="mt-4">
-                        <a href="{{ route('departments.agents', $department->id) }}"><x-primary-button>{{ __('Voir sous-categories') }}</x-primary-button></a>
                         </div>
                     </div>
                 </div>

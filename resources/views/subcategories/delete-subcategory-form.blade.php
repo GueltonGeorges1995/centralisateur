@@ -1,18 +1,18 @@
 <section class="space-y-6">
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Supprimer une sous categorie') }}
+            {{ __('Supprimer un modèle') }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            {{ __('Une fois une sous categorie supprimée, tous les items seront supprimés aussi. .') }}
+            {{ __('Une fois un modèle supprimé, tous les équipements liés à ce modèle seront supprimés aussi.') }}
         </p>
     </header>
 
     <x-danger-button
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'confirm-place-deletion')"
-    >{{ __("Supprimer le local") }}</x-danger-button>
+    >{{ __("Supprimer le modèle") }}</x-danger-button>
 
     <x-modal name="confirm-place-deletion" focusable>
     <form method="post" action="{{ route('subcategories.destroy', $subcategory) }}" class="p-6">
@@ -20,11 +20,11 @@
         @method('delete')
 
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __("Êtes-vous sûr de vouloir supprimer ce local ?") }}
+            {{ __("Êtes-vous sûr de vouloir supprimer ce modèle ?") }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            {{ __("Une fois l'endroit supprimé, toutes les données associées seront perdues.") }}
+            {{ __("Une fois le modèle supprimé, toutes les données associées seront perdues.") }}
         </p>
 
         <div class="mt-6 flex justify-end">
