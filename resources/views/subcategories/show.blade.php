@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __("Gestion des sous-categories") }}
+            {{ __("Gestion des modèles") }}
         </h2>
     </x-slot>
 
@@ -26,15 +26,11 @@
                                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 underline"> <a href="{{ route('categories.show', $subcategory->category->id) }}">{{$subcategory->category->name}}</a>  </dd>
                                 </div>
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nombre de locaux</dt>
-                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                        10</dd>
+                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nombre d'équipements</dt>
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 underline">
+                                    <a href="{{ route('subcategories.items', $subcategory->id) }}">{{$subcategory->items->count()}}</a></dd>
                                 </div>
                             </dl>
-                        </div>
-
-                        <div class="mt-4">
-                        <x-primary-button>{{ __('Voir les locaux') }}</x-primary-button>
                         </div>
                     </div>
                 </div>

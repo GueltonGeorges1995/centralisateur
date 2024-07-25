@@ -22,8 +22,8 @@
                                             <p class="mt-1 truncate text-sm text-gray-500"> {{ $subcategory->category->name ?? 'N/A' }} </p>
                                         </div>
                                         <div class="flex">
-                                            <p class="mt-1 truncate text-sm text-gray-500"> Nombre de d'item :
-                                                <span> {{$subcategory->id}} </span>
+                                            <p class="mt-1 truncate text-sm text-gray-500"> Nombre de d'équipements :
+                                                <span> {{$subcategory->items->count()}} </span>
                                             </p>
                                         </div>
 

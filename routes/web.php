@@ -39,12 +39,13 @@ Route::get('/subplaces/{subplace}/items', [SubplaceController::class, 'showItems
 Route::resource('categories', CategoryController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
     ->middleware(['auth', 'verified']);
-Route::get('/categories/{category}/subcategories', [CategoryController::class, 'showSubcategories'])->name('categories.subcategories');
-Route::get('/categories/{category}/items', [CategoryController::class, 'showItems'])->name('categories.items');
+Route::get('/categories/{category}/subcategories', [CategoryController::class, 'showSubcategories'])->name('categories.subcategories')->middleware(['auth', 'verified']);
+Route::get('/categories/{category}/items', [CategoryController::class, 'showItems'])->name('categories.items')->middleware(['auth', 'verified']);
 
 Route::resource('subcategories', SubcategoryController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
     ->middleware(['auth', 'verified']);
+Route::get('/subcategories/{subcategory}/items', [SubcategoryController::class, 'showItems'])->name('subcategories.items')->middleware(['auth', 'verified']);
 
 Route::resource('departments', DepartmentController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])

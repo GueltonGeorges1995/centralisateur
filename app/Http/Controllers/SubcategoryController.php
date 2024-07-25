@@ -56,6 +56,13 @@ class SubcategoryController extends Controller
         return view('subcategories.show', compact('subcategory','categories'));
     }
 
+    public function showItems(Subcategory $subcategory)
+    {
+        $subcategory->load('items');
+
+        return view('subcategories.items', compact('subcategory'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
