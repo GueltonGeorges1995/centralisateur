@@ -19,8 +19,8 @@
                                             <h3 class="truncate text-sm font-medium text-gray-900"> {{$supplier->name}} </h3>
                                         </div>
                                         <div class="flex">
-                                            <p class="mt-1 truncate text-sm text-gray-500"> Nombre d'objets :
-                                                <span> Nombre </span>
+                                            <p class="mt-1 truncate text-sm text-gray-500"> Nombre d'équipements associés :
+                                                <span> {{$supplier->items->count()}} </span>
                                             </p>
                                         </div>
                                     </div>

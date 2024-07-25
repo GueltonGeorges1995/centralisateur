@@ -16,7 +16,7 @@
         <div>
             <label for="">Nom du fournisseur</label>
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" value=" {{$supplier->name}} "
-                required autofocus autocomplete="name" />
+                required  autocomplete="name" />
 
         </div>
         <div class="flex items-center gap-4">

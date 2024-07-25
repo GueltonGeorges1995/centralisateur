@@ -50,6 +50,13 @@ class SupplierController extends Controller
         return view('suppliers.show', compact('supplier'));
     }
 
+    public function showItems(Supplier $supplier)
+    {
+        $supplier->load('items');
+
+        return view('suppliers.items', compact('supplier'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

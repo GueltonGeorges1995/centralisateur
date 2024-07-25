@@ -23,18 +23,14 @@
                                 </div>
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt class="text-sm font-medium leading-6 text-gray-900">Nombre d'objets associés</dt>
-                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                        
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 underline">
+                                    <a href="{{ route('suppliers.items', $supplier->id) }}"> {{$supplier->items->count()}} équipements associés</a>
                                     </dd>
                                 </div>
                             </dl>
                         </div>
 
-                        <div class="mt-4">
-                            <a href=>
-                                <x-primary-button>{{ __('Voir les objets') }}</x-primary-button>
-                            </a>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

@@ -60,6 +60,7 @@ Route::resource('agents', AgentController::class)
 Route::resource('suppliers', SupplierController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
     ->middleware(['auth', 'verified']);
+Route::get('/suppliers/{supplier}/items', [SupplierController::class, 'showItems'])->name('suppliers.items')->middleware(['auth', 'verified']);
 
 Route::resource('items', ItemController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
