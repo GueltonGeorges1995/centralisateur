@@ -36,13 +36,13 @@ class SubcategoryController extends Controller
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
         ]);
-        
+
         Subcategory::create([
             'name' => $validatedData['name'],
             'category_id' => $validatedData['category_id'],
-            
+
         ]);
-        
+
         return redirect()->route('subcategories.index')->with('success','');
     }
 
@@ -58,9 +58,13 @@ class SubcategoryController extends Controller
 
     public function showItems(Subcategory $subcategory)
     {
-        $subcategory->load('items');
+        // Obtenez les items paginés pour ce lieu
+        $items = $subcategory->items()->paginate(5);
 
-        return view('subcategories.items', compact('subcategory'));
+        // Chargez les relations nécessaires sur les items paginés
+        $items->load('place', 'subplace', 'category', 'subcategory', 'department', 'agent', 'supplier');
+
+        return view('subcategories.items', compact('subcategory', 'items'));
     }
 
     /**
@@ -79,7 +83,7 @@ class SubcategoryController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            
+
         ]);
 
         $subcategory->update($validatedData);

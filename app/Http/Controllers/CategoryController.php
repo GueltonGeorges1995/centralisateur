@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::with('subcategories')->get();
-       
+
 
         return view('categories.index', compact('categories'));
     }
@@ -61,9 +61,13 @@ class CategoryController extends Controller
 
     public function showItems(Category $category)
     {
-        $category->load('items'); // Charge les subplaces associées
+        // Obtenez les items paginés pour ce lieu
+        $items = $category->items()->paginate(5);
 
-        return view('categories.items', compact('category'));
+        // Chargez les relations nécessaires sur les items paginés
+        $items->load('place', 'subplace', 'category', 'subcategory', 'department', 'agent', 'supplier');
+
+        return view('categories.items', compact('category', 'items'));
     }
 
     /**

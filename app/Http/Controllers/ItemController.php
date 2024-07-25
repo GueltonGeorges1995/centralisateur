@@ -56,7 +56,7 @@ class ItemController extends Controller
              });
          }
 
-         $items = $items->get();
+         $items = $items->paginate(5);
 
          return view('items.index', compact('items'));
      }

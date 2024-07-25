@@ -107,7 +107,7 @@
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-gray-200 bg-white">
-                                            @foreach ($subcategory->items as $item)
+                                            @foreach ($items as $item)
                                                 <tr>
                                                     <td
                                                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
@@ -135,6 +135,7 @@
                                 </div>
                             </div>
                         </div>
+                        {{ $items->links() }}
                         <div class="mt-6 flex justify-start">
                             <a href="{{ route('subcategories.show', $subcategory->id) }}"
                                 class="text-sm font-semibold text-gray-900">
@@ -143,7 +144,7 @@
                         </div>
                     </div>
                     @endif
-                    
+
 
 
                 </div>

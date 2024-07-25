@@ -12,17 +12,17 @@ class PlaceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View 
+    public function index(): View
     {
         $places = Place::with('subplaces')->get();
-       
+
          return view('places.index', compact('places'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View 
+    public function create(): View
     {
         return view('places.create');
     }
@@ -35,13 +35,13 @@ class PlaceController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string',
-            
+
         ]);
 
         Place::create([
             'name' => $validatedData['name'],
             'address' => $validatedData['address'],
-            
+
         ]);
 
         return redirect()->route('places.index')->with('success', 'Places created successfully!');
@@ -59,18 +59,21 @@ class PlaceController extends Controller
 
     public function showSubplaces(Place $place)
     {
-        $place->load('subplaces'); 
+        $place->load('subplaces');
 
         return view('places.subplaces', compact('place'));
     }
 
     public function showItems(Place $place)
     {
-        $place->load('items');
+        // Obtenez les items paginés pour ce lieu
+        $items = $place->items()->paginate(5);
 
-        return view('places.items', compact('place'));
+        // Chargez les relations nécessaires sur les items paginés
+        $items->load('place', 'subplace', 'category', 'subcategory', 'department', 'agent', 'supplier');
+
+        return view('places.items', compact('place', 'items'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -87,7 +90,7 @@ class PlaceController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string',
-            
+
         ]);
 
         $place->update($validatedData);

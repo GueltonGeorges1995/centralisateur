@@ -25,7 +25,7 @@ class SubplaceController extends Controller
     {
         $places = Place::all();
         return view('subplaces.create', compact('places'));
-        
+
     }
 
     /**
@@ -33,18 +33,18 @@ class SubplaceController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $validatedData =  $request->validate([
             'name' => 'required|string|max:255',
             'place_id' => 'required|exists:places,id',
         ]);
-        
+
         Subplace::create([
             'name' => $validatedData['name'],
             'place_id' => $validatedData['place_id'],
-            
+
         ]);
-        
+
         return redirect()->route('subplaces.index')->with('success','');
     }
 
@@ -59,11 +59,14 @@ class SubplaceController extends Controller
     }
     public function showItems(Subplace $subplace)
     {
-        $subplace->load('items');
+        // Obtenez les items paginés pour ce lieu
+        $items = $subplace->items()->paginate(5);
 
-        return view('subplaces.items', compact('subplace'));
+        // Chargez les relations nécessaires sur les items paginés
+        $items->load('place', 'subplace', 'category', 'subcategory', 'department', 'agent', 'supplier');
+
+        return view('subplaces.items', compact('subplace', 'items'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -80,7 +83,7 @@ class SubplaceController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'place_id' => 'required|exists:places,id',
-            
+
         ]);
 
         $subplace->update($validatedData);
