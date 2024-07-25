@@ -20,15 +20,17 @@
                                 <p class="mt-2 text-sm text-gray-700">Une liste des tous les équipements associé à la catégorie :  {{$category->name}}</p>
                             </div>
                             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                                <div>
-                                    <label for="search"
-                                        class="block text-sm font-medium leading-6 text-gray-900">Recherche
-                                        Rapide</label>
+                                <form method="GET" action="{{ route('items.index') }}">
+                                    <label for="search" class="block text-sm font-medium leading-6 text-gray-900">Recherche Rapide</label>
                                     <div class="relative mt-2 flex items-center">
-                                        <input type="text" name="search" id="search"
-                                            class="block w-full rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                        <input type="text" name="search" id="search" value="{{ request('search') }}" class="block w-full rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                        <button type="submit" class="absolute right-0 top-0 mt-2 mr-2">
+                                            <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                <path fill-rule="evenodd" d="M8.5 3a5.5 5.5 0 100 11 5.5 5.5 0 000-11zm0 1a4.5 4.5 0 110 9 4.5 4.5 0 010-9zM14 14a1 1 0 10-1.414-1.414l-3.182 3.182a1 1 0 001.414 1.414l3.182-3.182a1 1 0 000-1.414z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </button>
                                     </div>
-                                </div>
+                                </form>
 
                             </div>
                         </div>
@@ -142,7 +144,7 @@
                         </div>
                     </div>
                     @endif
-                    
+
 
 
                 </div>

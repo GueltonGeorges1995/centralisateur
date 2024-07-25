@@ -11,12 +11,26 @@ class AgentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $agents = Agent::with('department')->get();
+    public function index(Request $request)
+{
+    $search = $request->input('search');
 
-        return view('agents.index', compact('agents'));
-    }
+    // Requête de recherche
+    $agents = Agent::with('department')
+        ->when($search, function ($query, $search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('ext', 'like', "%{$search}%")
+                  ->orWhere('mail', 'like', "%{$search}%")
+                  ->orWhereHas('department', function ($q) use ($search) {
+                      $q->where('name', 'like', "%{$search}%");
+                  });
+            });
+        })
+        ->get();
+
+    return view('agents.index', compact('agents'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -38,15 +52,15 @@ class AgentController extends Controller
             'ext' => 'required|string|max:255',
             'department_id' => 'required|exists:departments,id',
         ]);
-        
+
         Agent::create([
             'name' => $validatedData['name'],
             'mail' => $validatedData['mail'],
             'ext' => $validatedData['ext'],
             'department_id' => $validatedData['department_id'],
-            
+
         ]);
-        
+
         return redirect()->route('agents.index')->with('success','');
     }
 

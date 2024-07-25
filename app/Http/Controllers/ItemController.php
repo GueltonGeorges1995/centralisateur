@@ -14,16 +14,52 @@ use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+     /**
+     * Display a listing of the items.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
      */
-    public function index()
-    {
-        $items = Item::with('place','subplace','category','subcategory','department','agent','supplier')->get();
 
-        return view('items.index', compact('items'));
-    }
+     public function index(Request $request)
+     {
+         $items = Item::with(['place', 'subplace', 'category', 'subcategory', 'department', 'agent', 'supplier']);
 
+         if ($request->has('search')) {
+             $search = $request->search;
+             $items = $items->where(function($query) use ($search) {
+                 $query->where('name', 'like', "%{$search}%")
+                     ->orWhere('description', 'like', "%{$search}%")
+                     ->orWhere('SN', 'like', "%{$search}%")
+                     ->orWhere('BOS', 'like', "%{$search}%")
+                     ->orWhereHas('place', function ($q) use ($search) {
+                         $q->where('name', 'like', "%{$search}%");
+                     })
+                     ->orWhereHas('subplace', function ($q) use ($search) {
+                         $q->where('name', 'like', "%{$search}%");
+                     })
+                     ->orWhereHas('category', function ($q) use ($search) {
+                         $q->where('name', 'like', "%{$search}%");
+                     })
+                     ->orWhereHas('subcategory', function ($q) use ($search) {
+                         $q->where('name', 'like', "%{$search}%");
+                     })
+                     ->orWhereHas('department', function ($q) use ($search) {
+                         $q->where('name', 'like', "%{$search}%");
+                     })
+                     ->orWhereHas('agent', function ($q) use ($search) {
+                         $q->where('name', 'like', "%{$search}%");
+                     })
+                     ->orWhereHas('supplier', function ($q) use ($search) {
+                         $q->where('name', 'like', "%{$search}%");
+                     });
+             });
+         }
+
+         $items = $items->get();
+
+         return view('items.index', compact('items'));
+     }
     /**
      * Show the form for creating a new resource.
      */
@@ -92,17 +128,17 @@ class ItemController extends Controller
             return response()->json(['error' => 'Failed to fetch agents'], 500);
         }
     }
-    
+
     /**
      * Display the specified resource.
      */
     public function show(Item $item)
     {
         $item->load('place','subplace','category','subcategory','department','agent','supplier');
-       
+
         return view('items.show', compact('item'));
 
-        
+
     }
 
     /**
