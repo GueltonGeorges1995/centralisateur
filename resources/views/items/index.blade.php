@@ -59,8 +59,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-4">
-                            {{ $items->links() }} <!-- Afficher les liens de pagination -->
+                        {{ $items->links() }}
+                        <div class="mt-4 flex justify-between">
+                            <!-- Afficher les liens de pagination -->
                             <a href="{{ route('items.create') }}">
                                 <x-primary-button>{{ __('Ajouter un équipement') }}</x-primary-button>
                             </a>
