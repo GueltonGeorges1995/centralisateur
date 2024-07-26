@@ -61,7 +61,12 @@
                         </div>
                         <div class="mt-4">
                             {{ $items->links() }} <!-- Afficher les liens de pagination -->
-                            <a href="{{ route('items.create') }}"><x-primary-button>{{ __('Ajouter un équipement') }}</x-primary-button></a>
+                            <a href="{{ route('items.create') }}">
+                                <x-primary-button>{{ __('Ajouter un équipement') }}</x-primary-button>
+                            </a>
+                            <a href="{{ route('export', ['search' => request('search')]) }}">
+                                <x-primary-button>{{ __('Exporter') }}</x-primary-button>
+                            </a>
                         </div>
                     </div>
                 </div>

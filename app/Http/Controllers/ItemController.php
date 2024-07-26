@@ -12,6 +12,10 @@ use App\Models\Subplace;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ItemsExport;
+
+
 class ItemController extends Controller
 {
      /**
@@ -60,6 +64,12 @@ class ItemController extends Controller
 
          return view('items.index', compact('items'));
      }
+     public function itemExport(Request $request)
+    {
+
+        return Excel::download(new ItemsExport($request->search), 'items.csv');
+    }
+
     /**
      * Show the form for creating a new resource.
      */

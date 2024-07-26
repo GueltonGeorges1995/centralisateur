@@ -33,7 +33,7 @@ Route::get('/places/{place}/items', [PlaceController::class, 'showItems'])->name
 
 Route::resource('subplaces', SubplaceController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
-    ->middleware(['auth', 'verified']);  
+    ->middleware(['auth', 'verified']);
 Route::get('/subplaces/{subplace}/items', [SubplaceController::class, 'showItems'])->name('subplaces.items')->middleware(['auth', 'verified']);
 
 Route::resource('categories', CategoryController::class)
@@ -56,7 +56,7 @@ Route::get('/departments/{department}/items', [DepartmentController::class, 'sho
 Route::resource('agents', AgentController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
     ->middleware(['auth', 'verified']);
-Route::get('/agents/{agent}/items', [AgentController::class, 'showItems'])->name('agents.items')->middleware(['auth', 'verified']);    
+Route::get('/agents/{agent}/items', [AgentController::class, 'showItems'])->name('agents.items')->middleware(['auth', 'verified']);
 
 Route::resource('suppliers', SupplierController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
@@ -67,8 +67,11 @@ Route::resource('items', ItemController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
     ->middleware(['auth', 'verified']);
 // Routes spécifiques pour les requêtes AJAX
-Route::get('/api/places/{id}/subplaces', [ItemController::class, 'getSubplaces']);
-Route::get('/api/categories/{id}/subcategories', [ItemController::class, 'getSubcategories'])->name('api.categories.subcategories');
-Route::get('/api/departments/{id}/agents', [ItemController::class, 'getAgents'])->name('api.departments.agents');
+Route::get('/api/places/{id}/subplaces', [ItemController::class, 'getSubplaces'])->middleware(['auth', 'verified']);
+Route::get('/api/categories/{id}/subcategories', [ItemController::class, 'getSubcategories'])->name('api.categories.subcategories')->middleware(['auth', 'verified']);
+Route::get('/api/departments/{id}/agents', [ItemController::class, 'getAgents'])->name('api.departments.agents')->middleware(['auth', 'verified']);
+
+Route::get('/export', [ItemController::class, 'itemExport'])->name('export');
+// Route::get('/items/export', [ItemController::class, 'itemExport'])->name('items.export');
 
 require __DIR__.'/auth.php';
