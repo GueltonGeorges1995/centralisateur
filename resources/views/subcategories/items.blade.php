@@ -13,7 +13,7 @@
                     <p class="mt-1 text-sm text-gray-600">Aucun équipement trouvé.</p>
                     @else
                     <div class="">
-                        <div class="sm:flex sm:items-center">
+                        <div class="sm:flex">
                             <div class="sm:flex-auto">
                                 <h1 class="text-base font-semibold leading-6 text-gray-900">Listes des Équipements de
                                     {{$subcategory->name}} </h1>
@@ -21,15 +21,17 @@
                                     l'emplacement {{$subcategory->name}}</p>
                             </div>
                             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                                <div>
-                                    <label for="search"
-                                        class="block text-sm font-medium leading-6 text-gray-900">Recherche
-                                        Rapide</label>
+                                <form method="GET" action="{{ route('items.index') }}">
+                                    <label for="search" class="block text-sm font-medium leading-6 text-gray-900">Recherche Rapide</label>
                                     <div class="relative mt-2 flex items-center">
-                                        <input type="text" name="search" id="search"
-                                            class="block w-full rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                        <input type="text" name="search" id="search" value="{{ request('search') }}" class="block w-full rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                        <button type="submit" class="absolute right-0 top-0 mt-2 mr-2">
+                                            <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
                                     </div>
-                                </div>
+                                </form>
 
                             </div>
                         </div>
