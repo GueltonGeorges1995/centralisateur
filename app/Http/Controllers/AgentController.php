@@ -27,7 +27,9 @@ class AgentController extends Controller
                   });
             });
         })
-        ->get();
+        ->paginate(5);
+
+
 
     return view('agents.index', compact('agents'));
 }
@@ -76,9 +78,13 @@ class AgentController extends Controller
 
     public function showItems(Agent $agent)
     {
-        $agent->load('items');
+        // Obtenez les items paginés pour ce lieu
+        $items = $agent->items()->paginate(5);
 
-        return view('agents.items', compact('agent'));
+        // Chargez les relations nécessaires sur les items paginés
+        $items->load('place', 'subplace', 'category', 'subcategory', 'department', 'agent', 'supplier');
+
+        return view('agents.items', compact('agent', 'items'));
     }
     /**
      * Show the form for editing the specified resource.

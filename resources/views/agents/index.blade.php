@@ -60,6 +60,7 @@
                                 </div>
                             </div>
                         </div>
+                        {{ $agents->links() }}
                         <div class="mt-4">
                             <a href="{{ route('agents.create') }}"><x-primary-button>{{ __('Ajouter un agent') }}</x-primary-button></a>
                         </div>

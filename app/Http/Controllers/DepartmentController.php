@@ -36,7 +36,7 @@ class DepartmentController extends Controller
 
         Department::create([
             'name' => $validatedData['name'],
-            
+
         ]);
 
         return redirect()->route('departments.index')->with('success', 'Places created successfully!');
@@ -60,9 +60,13 @@ class DepartmentController extends Controller
 
     public function showItems(Department $department)
     {
-        $department->load('items'); // Charge les subplaces associées
+        // Obtenez les items paginés pour ce lieu
+        $items = $department->items()->paginate(5);
 
-        return view('departments.items', compact('department'));
+        // Chargez les relations nécessaires sur les items paginés
+        $items->load('place', 'subplace', 'category', 'subcategory', 'department', 'agent', 'supplier');
+
+        return view('departments.items', compact('department', 'items'));
     }
 
     /**

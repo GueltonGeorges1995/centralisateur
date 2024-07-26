@@ -46,15 +46,19 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        
+
         return view('suppliers.show', compact('supplier'));
     }
 
     public function showItems(Supplier $supplier)
     {
-        $supplier->load('items');
+        // Obtenez les items paginés pour ce lieu
+        $items = $supplier->items()->paginate(5);
 
-        return view('suppliers.items', compact('supplier'));
+        // Chargez les relations nécessaires sur les items paginés
+        $items->load('place', 'subplace', 'category', 'subcategory', 'department', 'agent', 'supplier');
+
+        return view('suppliers.items', compact('supplier', 'items'));
     }
 
     /**
