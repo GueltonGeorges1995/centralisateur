@@ -11,6 +11,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckUserRole;
 
 Route::get('/', function () {
     return view('dashboard');
@@ -27,8 +28,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('places', PlaceController::class)
-    ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
-    ->middleware(['auth', 'verified']);
+    ->only(['index', 'store','create','edit', 'update',"show"])
+    ->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin,basic']);
+Route::delete('places/{place}', [PlaceController::class, 'destroy'])
+    ->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin'])
+    ->name('places.destroy');
+
 Route::get('/places/{place}/subplaces', [PlaceController::class, 'showSubplaces'])->name('places.subplaces')->middleware(['auth', 'verified']);
 Route::get('/places/{place}/items', [PlaceController::class, 'showItems'])->name('places.items')->middleware(['auth', 'verified']);
 

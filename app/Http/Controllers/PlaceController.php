@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class PlaceController extends Controller
 {
     /**
@@ -14,6 +16,10 @@ class PlaceController extends Controller
      */
     public function index(): View
     {
+        Gate::authorize('viewAny', Place::class);
+
+
+
         $places = Place::with('subplaces')->get();
 
          return view('places.index', compact('places'));
@@ -24,6 +30,7 @@ class PlaceController extends Controller
      */
     public function create(): View
     {
+        Gate::authorize('create', Place::class);
         return view('places.create');
     }
 
@@ -32,6 +39,8 @@ class PlaceController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', Place::class);
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string',
@@ -52,6 +61,8 @@ class PlaceController extends Controller
      */
     public function show(Place $place)
     {
+        Gate::authorize('view', $place);
+
         $place->load('subplaces');
 
         return view('places.show', compact('place'));
@@ -59,6 +70,8 @@ class PlaceController extends Controller
 
     public function showSubplaces(Place $place)
     {
+        Gate::authorize('view', $place);
+
         $place->load('subplaces');
 
         return view('places.subplaces', compact('place'));
@@ -66,6 +79,8 @@ class PlaceController extends Controller
 
     public function showItems(Place $place)
     {
+        Gate::authorize('view', $place);
+
         // Obtenez les items paginés pour ce lieu
         $items = $place->items()->paginate(5);
 
@@ -87,6 +102,8 @@ class PlaceController extends Controller
      */
     public function update(Request $request, Place $place)
     {
+        Gate::authorize('update', $place);
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string',
@@ -103,6 +120,8 @@ class PlaceController extends Controller
      */
     public function destroy(Place $place)
     {
+        Gate::authorize('delete', $place);
+
         $place->delete();
 
         return redirect(route('places.index'));
