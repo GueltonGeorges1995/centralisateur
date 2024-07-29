@@ -88,9 +88,13 @@ Route::get('/agents/{agent}/items', [AgentController::class, 'showItems'])->name
 
 
 Route::resource('suppliers', SupplierController::class)
-    ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
+    ->only(['index', 'store','create','edit', 'update',"show",CheckUserRole::class.':admin,super_admin,basic'])
     ->middleware(['auth', 'verified']);
-Route::get('/suppliers/{supplier}/items', [SupplierController::class, 'showItems'])->name('suppliers.items')->middleware(['auth', 'verified']);
+Route::delete('suppliers/{supplier}',[SupplierController::class, 'destroy'])->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin'])->name('suppliers.destroy');
+Route::get('/suppliers/{supplier}/items', [SupplierController::class, 'showItems'])->name('suppliers.items')->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin,basic']);
+
+
+
 
 Route::resource('items', ItemController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])

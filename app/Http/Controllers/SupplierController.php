@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+
 
 class SupplierController extends Controller
 {
@@ -12,6 +14,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Supplier::class);
+
         $suppliers = Supplier::all();
 
         return view("suppliers.index", compact("suppliers"));
@@ -22,6 +26,8 @@ class SupplierController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Supplier::class);
+
         return view("suppliers.create");
     }
 
@@ -30,6 +36,8 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', Supplier::class);
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255'
         ]);
@@ -47,11 +55,15 @@ class SupplierController extends Controller
     public function show(Supplier $supplier)
     {
 
+        Gate::authorize('view', $supplier);
+
         return view('suppliers.show', compact('supplier'));
     }
 
     public function showItems(Supplier $supplier)
     {
+        Gate::authorize('view', $supplier);
+
         // Obtenez les items paginés pour ce lieu
         $items = $supplier->items()->paginate(5);
 
@@ -74,6 +86,8 @@ class SupplierController extends Controller
      */
     public function update(Request $request, Supplier $supplier)
     {
+        Gate::authorize('update', $supplier);
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
         ]);
@@ -88,6 +102,8 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
+        Gate::authorize('delete', $supplier);
+
         $supplier->delete();
 
         return redirect(route('suppliers.index'));
