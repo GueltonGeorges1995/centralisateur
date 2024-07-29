@@ -68,10 +68,14 @@ Route::get('/subcategories/{subcategory}/items', [SubcategoryController::class, 
 
 
 Route::resource('departments', DepartmentController::class)
-    ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
-    ->middleware(['auth', 'verified']);
-Route::get('/departments/{department}/agents', [DepartmentController::class, 'showAgents'])->name('departments.agents')->middleware(['auth', 'verified']);
-Route::get('/departments/{department}/items', [DepartmentController::class, 'showItems'])->name('departments.items')->middleware(['auth', 'verified']);
+    ->only(['index', 'store','create','edit', 'update', "show"])
+    ->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin,basic']);
+Route::delete('departments/{department}',[DepartmentController::class, 'destroy'])->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin'])->name('departments.destroy');
+Route::get('/departments/{department}/agents', [DepartmentController::class, 'showAgents'])->name('departments.agents')->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin,basic']);
+Route::get('/departments/{department}/items', [DepartmentController::class, 'showItems'])->name('departments.items')->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin,basic']);
+
+
+
 
 Route::resource('agents', AgentController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])

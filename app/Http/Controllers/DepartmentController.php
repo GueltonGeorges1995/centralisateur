@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class DepartmentController extends Controller
 {
@@ -12,6 +13,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Department::class);
         $departments = Department::with('agents')->get();
 
         return view("departments.index", compact("departments"));
@@ -22,6 +24,8 @@ class DepartmentController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Department::class);
+
         return view("departments.create");
     }
 
@@ -30,6 +34,8 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', Department::class);
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255'
         ]);
@@ -47,12 +53,16 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
+        Gate::authorize('view', $department);
+
         $department->load('agents');
 
         return view('departments.show', compact('department'));
     }
     public function showAgents(Department $department)
     {
+        Gate::authorize('view', $department);
+
         $department->load('agents'); // Charge les subplaces associées
 
         return view('departments.agents', compact('department'));
@@ -60,6 +70,8 @@ class DepartmentController extends Controller
 
     public function showItems(Department $department)
     {
+        Gate::authorize('view', $department);
+
         // Obtenez les items paginés pour ce lieu
         $items = $department->items()->paginate(5);
 
@@ -82,6 +94,8 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, Department $department)
     {
+        Gate::authorize('update', $department);
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
         ]);
@@ -96,6 +110,8 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
+        Gate::authorize('delete', $department);
+
         $department->delete();
 
         return redirect(route('departments.index'));
