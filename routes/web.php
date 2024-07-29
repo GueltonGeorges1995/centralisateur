@@ -9,6 +9,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -71,7 +72,11 @@ Route::get('/api/places/{id}/subplaces', [ItemController::class, 'getSubplaces']
 Route::get('/api/categories/{id}/subcategories', [ItemController::class, 'getSubcategories'])->name('api.categories.subcategories')->middleware(['auth', 'verified']);
 Route::get('/api/departments/{id}/agents', [ItemController::class, 'getAgents'])->name('api.departments.agents')->middleware(['auth', 'verified']);
 
-Route::get('/export', [ItemController::class, 'itemExport'])->name('export');
-// Route::get('/items/export', [ItemController::class, 'itemExport'])->name('items.export');
+Route::get('/export', [ItemController::class, 'itemExport'])->name('export')->middleware(['auth', 'verified']);
+
+Route::resource('users', UserController::class)
+    ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
+    ->middleware(['auth', 'verified']);
+
 
 require __DIR__.'/auth.php';
