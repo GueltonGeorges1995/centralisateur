@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __("Gestion des categories") }}
+            {{ __('Gestion des categories') }}
         </h2>
     </x-slot>
 
@@ -16,23 +16,28 @@
                         </div>
                         <div class="mt-6 border-t border-gray-100">
                             <dl class="divide-y divide-gray-100">
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt class="text-sm font-medium leading-6 text-gray-900">Nom de la catégorie</dt>
                                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                       {{$category->name}}
+                                        {{ $category->name }}
                                     </dd>
                                 </div>
                                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nommbre de modèles associés</dt>
-                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 underline">
-                                       <a href="{{ route('categories.subcategories', $category->id) }}"> {{$category->subcategories->count()}} modèle(s)</a> 
-                                    </dd>
-                                </div>
-                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nombre d'équipements associés
+                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nommbre de modèles associés
                                     </dt>
                                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 underline">
-                                      <a href="{{ route('categories.items', $category->id) }}">{{$category->items->count()}} équipements</a></dd>
+                                        <a href="{{ route('categories.subcategories', $category->id) }}">
+                                            {{ $category->subcategories->count() }} modèle(s)</a>
+                                    </dd>
+                                </div>
+                                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt class="text-sm font-medium leading-6 text-gray-900">Nombre d'équipements
+                                        associés
+                                    </dt>
+                                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 underline">
+                                        <a href="{{ route('categories.items', $category->id) }}">{{ $category->items->count() }}
+                                            équipements</a>
+                                    </dd>
                                 </div>
                             </dl>
                         </div>
@@ -44,12 +49,15 @@
                     @include('categories.update-category-form')
                 </div>
             </div>
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg mt-10">
-                <div class="max-w-xl">
-                    @include('categories.delete-category-form')
+            @can('delete', $category)
+                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg mt-10">
+                    <div class="max-w-xl">
+                        @include('categories.delete-category-form')
+                    </div>
                 </div>
-            </div>
-            
+            @endcan
+
+
         </div>
     </div>
 

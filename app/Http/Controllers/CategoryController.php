@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
@@ -12,6 +13,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Category::class);
         $categories = Category::with('subcategories')->get();
 
 
@@ -23,6 +25,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Category::class);
         return view('categories.create');
     }
 
@@ -31,6 +34,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', Category::class);
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255'
         ]);
@@ -47,6 +52,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+        Gate::authorize('view', $category);
+
         $category->load('subcategories');
 
         return view('categories.show', compact('category'));
@@ -54,6 +61,8 @@ class CategoryController extends Controller
 
     public function showSubcategories(Category $category)
     {
+        Gate::authorize('view', $category);
+
         $category->load('subcategories'); // Charge les subplaces associées
 
         return view('categories.subcategories', compact('category'));
@@ -61,6 +70,8 @@ class CategoryController extends Controller
 
     public function showItems(Category $category)
     {
+        Gate::authorize('view', $category);
+
         // Obtenez les items paginés pour ce lieu
         $items = $category->items()->paginate(5);
 
@@ -83,6 +94,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        Gate::authorize('update', $category);
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
         ]);
@@ -97,6 +110,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        Gate::authorize('delete', $category);
+
         $category->delete();
 
         return redirect(route('categories.index'));
