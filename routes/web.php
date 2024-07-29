@@ -40,9 +40,12 @@ Route::get('/places/{place}/items', [PlaceController::class, 'showItems'])->name
 
 
 Route::resource('subplaces', SubplaceController::class)
-    ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
-    ->middleware(['auth', 'verified']);
-Route::get('/subplaces/{subplace}/items', [SubplaceController::class, 'showItems'])->name('subplaces.items')->middleware(['auth', 'verified']);
+    ->only(['index', 'store','create','edit', 'update', "show"])
+    ->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin,basic']);
+Route::delete('subplaces/{subplace}',[SubplaceController::class, 'destroy'])->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin'])->name('subplaces.destroy');
+Route::get('/subplaces/{subplace}/items', [SubplaceController::class, 'showItems'])->name('subplaces.items')->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin,basic']);
+
+
 
 Route::resource('categories', CategoryController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])

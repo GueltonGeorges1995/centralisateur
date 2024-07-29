@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Subplace;
 use App\Models\Place;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class SubplaceController extends Controller
 {
@@ -13,6 +14,8 @@ class SubplaceController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Subplace::class);
+
         $subplaces = Subplace::with('place')->get();
 
         return view('subplaces.index', compact('subplaces'));
@@ -23,6 +26,7 @@ class SubplaceController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Subplace::class);
         $places = Place::all();
         return view('subplaces.create', compact('places'));
 
@@ -33,6 +37,8 @@ class SubplaceController extends Controller
      */
     public function store(Request $request)
     {
+
+        Gate::authorize('create', Subplace::class);
 
         $validatedData =  $request->validate([
             'name' => 'required|string|max:255',
@@ -53,12 +59,15 @@ class SubplaceController extends Controller
      */
     public function show(Subplace $subplace)
     {
+        Gate::authorize('view', $subplace);
         $subplace->load('place');
         $places = Place::all();
         return view('subplaces.show', compact('subplace','places'));
     }
     public function showItems(Subplace $subplace)
     {
+        Gate::authorize('view', $subplace);
+
         // Obtenez les items paginés pour ce lieu
         $items = $subplace->items()->paginate(5);
 
@@ -80,6 +89,8 @@ class SubplaceController extends Controller
      */
     public function update(Request $request, Subplace $subplace)
     {
+        Gate::authorize('update', $subplace);
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'place_id' => 'required|exists:places,id',
@@ -96,6 +107,8 @@ class SubplaceController extends Controller
      */
     public function destroy(Subplace $subplace)
     {
+        Gate::authorize('delete', $subplace);
+
         $subplace->delete();
 
         return redirect(route('subplaces.index'));
