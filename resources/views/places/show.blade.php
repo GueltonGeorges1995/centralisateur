@@ -40,18 +40,6 @@
                                 </div>
                             </dl>
                         </div>
-
-                        <!-- <div class="mt-4">
-                            <a
-                                href="{{ route('places.subplaces', $place->id) }}"><x-primary-button>{{ __('Voir les locaux') }}</x-primary-button></a>
-                        </div>
-                        <span class="isolate inline-flex rounded-md shadow-sm">
-                            <button type="button"
-                                class="relative inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10">Voir les locaux</button>
-                          
-                            <button type="button"
-                                class="relative -ml-px inline-flex items-center rounded-r-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10">Days</button>
-                        </span> -->
                     </div>
                 </div>
             </div>
@@ -62,11 +50,13 @@
                 </div>
             </div>
 
+            @can('delete', $place)
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg mt-10">
                 <div class="max-w-xl">
                     @include('places.delete-place-form')
                 </div>
             </div>
+            @endcan
         </div>
     </div>
 
