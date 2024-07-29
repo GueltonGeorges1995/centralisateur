@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class SubcategoryController extends Controller
 {
@@ -13,6 +14,7 @@ class SubcategoryController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Subcategory::class);
         $subcategories = Subcategory::with('category')->get();
 
         return view('subcategories.index', compact('subcategories'));
@@ -23,6 +25,8 @@ class SubcategoryController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Subcategory::class);
+
         $categories = Category::all();
         return view('subcategories.create', compact('categories'));
     }
@@ -32,6 +36,8 @@ class SubcategoryController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', Subcategory::class);
+
         $validatedData =  $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
@@ -51,6 +57,8 @@ class SubcategoryController extends Controller
      */
     public function show(Subcategory $subcategory)
     {
+        Gate::authorize('view', $subcategory);
+
         $subcategory->load('category');
         $categories = Category::all();
         return view('subcategories.show', compact('subcategory','categories'));
@@ -58,6 +66,8 @@ class SubcategoryController extends Controller
 
     public function showItems(Subcategory $subcategory)
     {
+        Gate::authorize('view', $subcategory);
+
         // Obtenez les items paginés pour ce lieu
         $items = $subcategory->items()->paginate(5);
 
@@ -80,6 +90,8 @@ class SubcategoryController extends Controller
      */
     public function update(Request $request, Subcategory $subcategory)
     {
+        Gate::authorize('update', $subcategory);
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
@@ -96,6 +108,8 @@ class SubcategoryController extends Controller
      */
     public function destroy(Subcategory $subcategory)
     {
+        Gate::authorize('delete', $subcategory);
+
         $subcategory->delete();
 
         return redirect(route('subcategories.index'));

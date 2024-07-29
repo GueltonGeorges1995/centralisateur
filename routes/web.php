@@ -57,9 +57,15 @@ Route::get('/categories/{category}/items', [CategoryController::class, 'showItem
 
 
 Route::resource('subcategories', SubcategoryController::class)
-    ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
-    ->middleware(['auth', 'verified']);
-Route::get('/subcategories/{subcategory}/items', [SubcategoryController::class, 'showItems'])->name('subcategories.items')->middleware(['auth', 'verified']);
+    ->only(['index', 'store','create','edit', 'update',"show"])
+    ->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin,basic']);
+    Route::delete('subcategories/{subcategory}',[SubcategoryController::class, 'destroy'])->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin'])->name('subcategories.destroy');
+Route::get('/subcategories/{subcategory}/items', [SubcategoryController::class, 'showItems'])->name('subcategories.items')->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin,basic']);
+
+
+
+
+
 
 Route::resource('departments', DepartmentController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])

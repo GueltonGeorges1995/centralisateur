@@ -42,13 +42,16 @@
                 </div>
             </div>
 
+            @can('delete',$subcategory)
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg mt-10">
                 <div class="max-w-xl">
                     @include('subcategories.delete-subcategory-form')
                 </div>
             </div>
+            @endcan
+
         </div>
     </div>
 
-    
+
 </x-app-layout>
