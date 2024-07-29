@@ -49,14 +49,18 @@
                     @include('agents.update-agent-form')
                 </div>
             </div>
+
+            @can('delete',$agent)
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg mt-10">
                 <div class="max-w-xl">
                     @include('agents.delete-agent-form')
                 </div>
             </div>
-         
+            @endcan
+
+
         </div>
     </div>
 
-    
+
 </x-app-layout>

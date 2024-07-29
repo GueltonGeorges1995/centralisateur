@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Agent;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class AgentController extends Controller
 {
@@ -13,6 +14,8 @@ class AgentController extends Controller
      */
     public function index(Request $request)
 {
+    Gate::authorize('viewAny', Agent::class);
+
     $search = $request->input('search');
 
     // Requête de recherche
@@ -39,6 +42,8 @@ class AgentController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Agent::class);
+
         $departments = Department::all();
         return view('agents.create', compact('departments'));
     }
@@ -48,6 +53,8 @@ class AgentController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', Agent::class);
+
         $validatedData =  $request->validate([
             'name' => 'required|string|max:255',
             'mail' => 'required|string|max:255',
@@ -71,6 +78,8 @@ class AgentController extends Controller
      */
     public function show(Agent $agent)
     {
+        Gate::authorize('view', $agent);
+
         $agent->load('department');
         $departments = Department::all();
         return view('agents.show', compact('agent','departments'));
@@ -78,6 +87,8 @@ class AgentController extends Controller
 
     public function showItems(Agent $agent)
     {
+        Gate::authorize('view', $agent);
+
         // Obtenez les items paginés pour ce lieu
         $items = $agent->items()->paginate(5);
 
@@ -99,6 +110,8 @@ class AgentController extends Controller
      */
     public function update(Request $request, Agent $agent)
     {
+        Gate::authorize('update', $agent);
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'ext' => 'required|string|max:255',
@@ -116,6 +129,8 @@ class AgentController extends Controller
      */
     public function destroy(Agent $agent)
     {
+        Gate::authorize('delete', $agent);
+
         $agent->delete();
 
         return redirect(route('agents.index'));
