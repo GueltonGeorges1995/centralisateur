@@ -97,14 +97,18 @@ Route::get('/suppliers/{supplier}/items', [SupplierController::class, 'showItems
 
 
 Route::resource('items', ItemController::class)
-    ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
-    ->middleware(['auth', 'verified']);
+    ->only(['index', 'store','create','edit', 'update',"show"])
+    ->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin,basic']);
+Route::delete('items/{item}',[ItemController::class, 'destroy'])->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin'])->name('items.destroy');
 // Routes spécifiques pour les requêtes AJAX
-Route::get('/api/places/{id}/subplaces', [ItemController::class, 'getSubplaces'])->middleware(['auth', 'verified']);
-Route::get('/api/categories/{id}/subcategories', [ItemController::class, 'getSubcategories'])->name('api.categories.subcategories')->middleware(['auth', 'verified']);
-Route::get('/api/departments/{id}/agents', [ItemController::class, 'getAgents'])->name('api.departments.agents')->middleware(['auth', 'verified']);
+Route::get('/api/places/{id}/subplaces', [ItemController::class, 'getSubplaces'])->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin,basic']);
+Route::get('/api/categories/{id}/subcategories', [ItemController::class, 'getSubcategories'])->name('api.categories.subcategories')->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin,basic']);
+Route::get('/api/departments/{id}/agents', [ItemController::class, 'getAgents'])->name('api.departments.agents')->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin,basic']);
 
-Route::get('/export', [ItemController::class, 'itemExport'])->name('export')->middleware(['auth', 'verified']);
+Route::get('/export', [ItemController::class, 'itemExport'])->name('export')->middleware(['auth', 'verified',CheckUserRole::class.':admin,super_admin,basic']);
+
+
+
 
 Route::resource('users', UserController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])

@@ -11,6 +11,7 @@ use App\Models\Subcategory;
 use App\Models\Subplace;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ItemsExport;
@@ -27,6 +28,8 @@ class ItemController extends Controller
 
      public function index(Request $request)
      {
+        Gate::authorize('viewAny', Item::class);
+
          $items = Item::with(['place', 'subplace', 'category', 'subcategory', 'department', 'agent', 'supplier']);
 
          if ($request->has('search')) {
@@ -66,6 +69,8 @@ class ItemController extends Controller
      }
      public function itemExport(Request $request)
     {
+        Gate::authorize('viewAny', Item::class);
+
 
         return Excel::download(new ItemsExport($request->search), 'items.csv');
     }
@@ -75,6 +80,8 @@ class ItemController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Item::class);
+
         $places = Place::all();
         $subplaces = Subplace::all();
         $categories = Category::all();
@@ -91,6 +98,8 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', Item::class);
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'SN' => 'required|string|max:255',
@@ -112,6 +121,9 @@ class ItemController extends Controller
 
     public function getSubplaces($placeId)
     {
+
+
+
         try {
             $subplaces = Subplace::where('place_id', $placeId)->get();
             return response()->json($subplaces);
@@ -144,6 +156,8 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
+        Gate::authorize('view', $item);
+
         $item->load('place','subplace','category','subcategory','department','agent','supplier');
 
         return view('items.show', compact('item'));
@@ -156,6 +170,8 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
+        Gate::authorize('update', $item);
+
         $places = Place::all();
         $subplaces = Subplace::all();
         $categories = Category::all();
@@ -174,6 +190,8 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
 {
+    Gate::authorize('update', $item);
+
     $validatedData = $request->validate([
         'name' => 'required|string|max:255',
         'SN' => 'required|string|max:255',
@@ -199,6 +217,8 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
+        Gate::authorize('delete', $item);
+
         $item->delete();
 
         return redirect(route('items.index'));

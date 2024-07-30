@@ -72,15 +72,17 @@
                 </div>
             </div>
 
-            
-           
+
+            @can('delete',$item)
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg mt-10">
                 <div class="max-w-xl">
                     @include('items.delete-item-form')
                 </div>
             </div>
+            @endcan
+
         </div>
     </div>
 
-    
+
 </x-app-layout>
