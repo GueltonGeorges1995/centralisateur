@@ -112,7 +112,7 @@ Route::get('/export', [ItemController::class, 'itemExport'])->name('export')->mi
 
 Route::resource('users', UserController::class)
     ->only(['index', 'store','create','edit', 'update', 'destroy', "show"])
-    ->middleware(['auth', 'verified']);
+    ->middleware(['auth', 'verified',CheckUserRole::class.':super_admin']);
 
 
 require __DIR__.'/auth.php';
