@@ -159,6 +159,7 @@ class ItemController extends Controller
         Gate::authorize('view', $item);
 
         $item->load('place','subplace','category','subcategory','department','agent','supplier');
+       
 
         return view('items.show', compact('item'));
 
